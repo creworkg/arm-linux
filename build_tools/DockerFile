@@ -1,0 +1,30 @@
+FROM amd64/ubuntu:20.04
+
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+# general setup
+RUN sed -i "s@http://.*archive.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /etc/apt/sources.list && \
+    sed -i "s@http://.*security.ubuntu.com@http://mirrors.tuna.tsinghua.edu.cn@g" /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get -y install vim wget sudo git make cmake  && \
+    apt-get clean
+
+# User account
+ENV USER=arm
+
+# Setup default user
+RUN useradd --create-home -s /bin/bash -m $USER && echo "$USER:arm" | chpasswd && adduser $USER sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+WORKDIR /home/$USER
+USER $USER
+
+# RUN wget -q https://snapshots.linaro.org/gnu-toolchain/13.0-2022.08-1/arm-linux-gnueabihf/gcc-linaro-13.0.0-2022.08-x86_64_arm-linux-gnueabihf.tar.xz && \
+#     tar -xJf gcc-linaro-13.0.0-2022.08-x86_64_arm-linux-gnueabihf.tar.xz
+
+ADD gcc-linaro-13.0.0-2022.08-x86_64_arm-linux-gnueabihf.tar.xz .
+
+
+ENV PATH "/home/$USER/gcc-linaro-13.0.0-2022.08-x86_64_arm-linux-gnueabihf/bin:$PATH"
+
+# ENTRYPOINT [ "cd", "/home/${USER}" ]
