@@ -1,7 +1,7 @@
 objects = start.o main.o
 
 ledc.bin : $(objects)
-	arm-linux-gnueabihf-ld -Ttext 0x87800000 $^ -o ledc.elf
+	arm-linux-gnueabihf-ld -Tim6ull.lds $^ -o ledc.elf
 	arm-linux-gnueabihf-objcopy -O binary -S ledc.elf $@
 	arm-linux-gnueabihf-objdump -D -m arm ledc.elf > ledc.dis
 
