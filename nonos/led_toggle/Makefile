@@ -1,7 +1,7 @@
 objects = start.o main.o
 
 ledc.bin : $(objects)
-	arm-linux-gnueabihf-ld -Tim6ull.lds $^ -o ledc.elf
+	arm-linux-gnueabihf-ld -Timx6ull.lds $^ -o ledc.elf
 	arm-linux-gnueabihf-objcopy -O binary -S ledc.elf $@
 	arm-linux-gnueabihf-objdump -D -m arm ledc.elf > ledc.dis
 
@@ -11,5 +11,10 @@ ledc.bin : $(objects)
 %.o : %.c
 	arm-linux-gnueabihf-gcc -Wall -nostdlib -c -o $@ $<
 
+PHONY:
 clean:
 	rm -rf *.o *.bin *.elf *.dis
+
+PHONY:
+flash:
+	./../imxdownload ledc.bin /dev/sdb

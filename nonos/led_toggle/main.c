@@ -3,7 +3,13 @@
 void init_led(void)
 {
     // OPEN CLOCK
+    CCM_CCGR0 = 0xfffffff;
     CCM_CCGR1 = 0xfffffff;
+    CCM_CCGR2 = 0xfffffff;
+    CCM_CCGR3 = 0xfffffff;
+    CCM_CCGR4 = 0xfffffff;
+    CCM_CCGR5 = 0xfffffff;
+    CCM_CCGR6 = 0xfffffff;
 
     // config io
     SW_MUX_CTL_GPIO1_IO03 = 0X05; 
