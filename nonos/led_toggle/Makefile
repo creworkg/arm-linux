@@ -13,7 +13,7 @@ ledc.bin : $(objects)
 
 PHONY:
 clean:
-	rm -rf *.o *.bin *.elf *.dis
+	rm -rf *.o *.bin *.elf *.dis *.imx
 
 PHONY:
 flash:
