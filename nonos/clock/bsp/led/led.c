@@ -1,4 +1,4 @@
-#include "main.h"
+#include "led.h"
 
 void init_led(void)
 {
@@ -38,12 +38,3 @@ void led_toggle(void)
     delayms(500);
 }
 
-int main(void)
-{
-    // init led
-    init_led();
-    // toggle led
-    while (1) {
-        led_toggle();
-    }
-}
